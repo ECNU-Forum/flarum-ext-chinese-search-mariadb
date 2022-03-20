@@ -6,5 +6,4 @@ flarum-ext-chinese-search-mariadb for v1.2.0
 
 ```
 composer require ecnu-forum/flarum-ext-chinese-search-mariadb
-
 ```
