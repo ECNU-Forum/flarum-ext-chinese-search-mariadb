@@ -1,0 +1,37 @@
+{
+  "name": "ecnuforum/flarum-ext-chinese-search-mariadb",
+  "description": "Support flarum-mariadb chinese search",
+  "keywords": ["flarum", "search"],
+  "type": "flarum-extension",
+  "license": "MIT",
+  "version": "0.0.1",
+  "authors": [
+      {
+          "name": "jacklightChen",
+          "email": "chenzh@stu.ecnu.edu.cn",
+          "role": "Developer"
+      }
+  ],
+  "support": {
+      "issues": "https://github.com/ECNU-Forum/flarum-ext-chinese-search-mariadb/issues",
+      "source": "https://github.com/ECNU-Forum/flarum-ext-chinese-search-mariadb"
+  },
+  "require": {
+      "flarum/core": ">=1.2"
+  },
+  "extra": {
+      "flarum-extension": {
+          "title": "Chinese Search Mariadb",
+          "icon": {
+              "name": "fa fa-search",
+              "backgroundColor": "#ddd",
+              "color": "#333"
+          }
+      }
+  },
+  "autoload": {
+      "psr-4": {
+          "ECNUForum\\Search\\": "src/"
+      }
+  }
+}
