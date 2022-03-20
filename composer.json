@@ -1,5 +1,5 @@
 {
-  "name": "ecnuforum/flarum-ext-chinese-search-mariadb",
+  "name": "ecnu-forum/flarum-ext-chinese-search-mariadb",
   "description": "Support flarum-mariadb chinese search",
   "keywords": ["flarum", "search"],
   "type": "flarum-extension",
@@ -25,7 +25,7 @@
           "icon": {
               "name": "fa fa-search",
               "backgroundColor": "#ddd",
-              "color": "#333"
+              "color": "#444"
           }
       }
   },
