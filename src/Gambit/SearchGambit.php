@@ -26,7 +26,8 @@ class SearchGambit implements GambitInterface
         $discussionSubquery = Discussion::select('id')
             ->selectRaw('NULL as score')
             ->selectRaw('first_post_id as most_relevant_post_id')
-            ->where('discussions.title', 'like', '%' . $bit . '%');
+            ->whereRaw('discussions.title like ?', ['%'.$bit.'%']);
+            // ->where('discussions.title', 'like', '%' . $bit . '%');
             // ->whereRaw('MATCH('.$grammar->wrap('discussions.title').') AGAINST (? IN BOOLEAN MODE)', [$bit]);
 
         // Construct a subquery to fetch discussions which contain relevant
@@ -38,7 +39,8 @@ class SearchGambit implements GambitInterface
             ->selectRaw('SUM(MATCH('.$grammar->wrap('posts.content').') AGAINST (?)) as score', [$bit])
             ->selectRaw('SUBSTRING_INDEX(GROUP_CONCAT('.$grammar->wrap('posts.id').' ORDER BY MATCH('.$grammar->wrap('posts.content').') AGAINST (?) DESC, '.$grammar->wrap('posts.number').'), \',\', 1) as most_relevant_post_id', [$bit])
             ->where('posts.type', 'comment')
-            ->where('posts.content', 'like', '%' . $bit . '%')
+            ->whereRaw('posts.content like ?', ['%'.$bit.'%'])
+            // ->where('posts.content', 'like', '%' . $bit . '%')
             // ->whereRaw('MATCH('.$grammar->wrap('posts.content').') AGAINST (? IN BOOLEAN MODE)', [$bit])
             ->groupBy('posts.discussion_id')
             ->union($discussionSubquery);
