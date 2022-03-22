@@ -26,7 +26,7 @@ class SearchGambit implements GambitInterface
         $discussionSubquery = Discussion::select('id')
             ->selectRaw('NULL as score')
             ->selectRaw('first_post_id as most_relevant_post_id')
-            ->whereRaw('discussions.title like ?', ['%'.$bit.'%']);
+            ->whereRaw(''.$grammar->wrap('discussions.title').' like ?', ['%'.$bit.'%']);
             // ->where('discussions.title', 'like', '%' . $bit . '%');
             // ->whereRaw('MATCH('.$grammar->wrap('discussions.title').') AGAINST (? IN BOOLEAN MODE)', [$bit]);
 
@@ -39,7 +39,7 @@ class SearchGambit implements GambitInterface
             ->selectRaw('SUM(MATCH('.$grammar->wrap('posts.content').') AGAINST (?)) as score', [$bit])
             ->selectRaw('SUBSTRING_INDEX(GROUP_CONCAT('.$grammar->wrap('posts.id').' ORDER BY MATCH('.$grammar->wrap('posts.content').') AGAINST (?) DESC, '.$grammar->wrap('posts.number').'), \',\', 1) as most_relevant_post_id', [$bit])
             ->where('posts.type', 'comment')
-            ->whereRaw('posts.content like ?', ['%'.$bit.'%'])
+            ->whereRaw(''.$grammar->wrap('posts.content').' like ?', ['%'.$bit.'%'])
             // ->where('posts.content', 'like', '%' . $bit . '%')
             // ->whereRaw('MATCH('.$grammar->wrap('posts.content').') AGAINST (? IN BOOLEAN MODE)', [$bit])
             ->groupBy('posts.discussion_id')
@@ -60,7 +60,7 @@ class SearchGambit implements GambitInterface
 
         $search->setDefaultSort(function ($query) use ($grammar, $bit) {
             // $query->orderByRaw('MATCH('.$grammar->wrap('discussions.title').') AGAINST (?) desc', [$bit]);
-            $query->orderByRaw('discussions.title like ? desc', ['%'.$bit.'%']);
+            $query->orderByRaw(''.$grammar->wrap('discussions.title').' like ? desc', ['%'.$bit.'%']);
             $query->orderBy('posts_ft.score', 'desc');
         });
     }
